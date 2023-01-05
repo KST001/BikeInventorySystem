@@ -84,6 +84,7 @@
 {
     <ModalDialog Title="Delete User" OnClose="@OnDeleteUserDialogClose" OkLabel="Confirm">
     <p>Are you sure you want to delete <strong>@_deleteUser.Username</strong> user and their data?</p>
+
     @if (!string.IsNullOrEmpty(_deleteUserErrorMessage))
         {
             <AlertMessage Type="danger" Message="@_deleteUserErrorMessage" />
