@@ -1,0 +1,87 @@
+﻿@inherits LayoutComponentBase
+@using BikeInventorySystem.Data
+
+
+<MudThemeProvider />
+<MudDialogProvider />
+<MudSnackbarProvider />
+
+<MudLayout>
+        <MudAppBar Elevation="0">
+            <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
+            <MudSpacer />
+            <MudText>Welcome @Username</MudText>
+
+            <MudMenu Icon="@Icons.Material.Filled.Person" Color="Color.Inherit" aria-label="Person">
+                @if (UserRole == Role.Admin)
+                {
+                    <MudMenuItem Icon="@Icons.Material.Filled.Person" IconColor="Color.Primary" Href="/users">Role</MudMenuItem>
+
+                }
+                     <MudMenuItem Icon="@Icons.Material.Filled.Security" IconColor="Color.Primary" Href="/change-password">Security</MudMenuItem>
+                     <MudMenuItem Icon="@Icons.Material.Filled.Logout" IconColor="Color.Error" @onclick="LogoutHandler">Logout</MudMenuItem>
+            </MudMenu>
+
+            <MudIconButton Icon="@Icons.Custom.Brands.GitHub" Color="Color.Inherit" Link="https://github.com/khemrajsinght" Target="_blank"></MudIconButton>
+        </MudAppBar>
+
+        <MudDrawer @bind-Open="_drawerOpen" Elevation="1">
+
+            <MudDrawerHeader Color="Color.Inherit">
+                <MudText Color="Color.Dark">Bike Inventory System</MudText>
+            </MudDrawerHeader>
+
+            <MudDivider DividerType="DividerType.Inset" />
+                <MudNavMenu>
+                        <MudNavLink Icon="@Icons.Material.Filled.Dashboard" IconColor="Color.Primary" Href="/dashboard" Match="NavLinkMatch.Prefix">Dashboard</MudNavLink>
+                        <MudNavLink Icon="@Icons.Material.Filled.Inventory" IconColor="Color.Primary" Href="/inventory" Match="NavLinkMatch.Prefix">Inventory</MudNavLink>
+                        <MudNavLink Icon="@Icons.Material.Filled.Inventory" IconColor="Color.Primary" Href="/Withdraw" Match="NavLinkMatch.Prefix">Withdraw</MudNavLink>
+
+                        @if (UserRole == Role.Admin)
+                        {
+                            <MudNavLink Icon="@Icons.Material.Filled.Drafts" IconColor="Color.Primary" Href="/Approval" Match="NavLinkMatch.Prefix">Approval</MudNavLink>
+                            <MudNavLink Icon="@Icons.Material.Filled.Receipt" IconColor="Color.Default" Href="/ApprovedLog" Match="NavLinkMatch.Prefix">Approved Logs</MudNavLink>
+                        }
+
+                        <MudNavLink Icon="@Icons.Material.Filled.BarChart" IconColor="Color.Info" Href="/analytics" Match="NavLinkMatch.Prefix">Analytics</MudNavLink>
+                        <MudNavGroup Icon="@Icons.Material.Filled.Settings" IconColor="Color.Dark" Title="Settings" Expanded="true">
+
+                            @if (UserRole == Role.Admin)
+                            {
+
+                                <MudNavLink Icon="@Icons.Material.Filled.People" IconColor="Color.Primary" Href="/users" Match="NavLinkMatch.Prefix">Manage Users</MudNavLink>
+
+                             }
+                
+                                <MudNavLink Icon="@Icons.Material.Filled.Password" IconColor="Color.Primary" Href="/change-password" Match="NavLinkMatch.Prefix">Change Password</MudNavLink>
+                        </MudNavGroup>
+
+                        <MudNavLink Icon="@Icons.Material.Filled.Logout" IconColor="Color.Secondary" @onclick="LogoutHandler" Match="NavLinkMatch.Prefix">Logout</MudNavLink>
+                </MudNavMenu>
+        </MudDrawer>
+
+        <MudMainContent>
+            <MudContainer MaxWidth="MaxWidth.Large" Class="my-16 pt-16">
+                @Body
+            </MudContainer>
+        </MudMainContent>
+
+    </MudLayout>
+
+
+@code {
+
+    bool _drawerOpen = true;
+
+    void DrawerToggle()
+    {
+        _drawerOpen = !_drawerOpen;
+    }
+    private GlobalState _globalState = new();
+    [Parameter]
+    public string Username { get; set; }
+    [Parameter]
+    public Role UserRole { get; set; }
+    [Parameter]
+    public EventCallback LogoutHandler { get; set; }
+}

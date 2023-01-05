@@ -1,0 +1,68 @@
+﻿@page "/piechart"
+@using ChartJs.Blazor.PieChart
+@namespace BikeInventorySystem.Data
+
+<div class="container-fluid mt-5">
+    <h5>
+        Approved PieChart
+    </h5>
+
+    <Chart Config="_config">
+    </Chart>
+
+</div>
+
+
+@code {
+
+    [CascadingParameter]
+    private GlobalState _globalState { get; set; }
+    private PieConfig _config;
+    private List<DataAnalysisDTO> _dataAnalysisDTO;
+    protected override void OnInitialized()
+    {
+        _dataAnalysisDTO = DataAnalysisS.DataAnalysisDTO(_globalState.CurrentUser.Id);
+        _config = new PieConfig
+            {
+                Options = new PieOptions
+                {
+                    Responsive = true,
+                    Title = new OptionsTitle
+                    {
+                        Display = true,
+                        Text = "Approved Items"
+                    }
+                }
+            };
+
+        PieDataset<int> dataset = new PieDataset<int>();
+
+        List<int> itemArrray = new List<int>();
+        foreach (var color in _dataAnalysisDTO)
+        {
+            _config.Data.Labels.Add(color.TitleName);
+            itemArrray.Add(color.ValueCount);
+        }
+
+        dataset = new PieDataset<int>(itemArrray)
+            {
+                BackgroundColor = new[]
+                        {
+                    ColorUtil.ColorHexString(255, 99, 132), // Slice 1 aka "Red"
+                    ColorUtil.ColorHexString(255, 205, 86), // Slice 2 aka "Yellow"
+                    ColorUtil.ColorHexString(75, 192, 192), // Slice 3 aka "Green"
+                    ColorUtil.ColorHexString(54, 162, 235), // Slice 4 aka "Blue"
+                    ColorUtil.ColorHexString(255, 99, 132), // Slice 1 aka "Red"
+                    ColorUtil.ColorHexString(255, 205, 86), // Slice 2 aka "Yellow"
+                    ColorUtil.ColorHexString(75, 192, 192), // Slice 3 aka "Green"
+                    ColorUtil.ColorHexString(54, 162, 235),
+                     ColorUtil.ColorHexString(255, 99, 132), // Slice 1 aka "Red"
+                    ColorUtil.ColorHexString(255, 205, 86), // Slice 2 aka "Yellow"
+                    ColorUtil.ColorHexString(75, 192, 192), // Slice 3 aka "Green"
+                    ColorUtil.ColorHexString(54, 162, 235)
+                }
+            };
+
+        _config.Data.Datasets.Add(dataset);
+    }
+}

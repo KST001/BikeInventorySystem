@@ -1,0 +1,26 @@
+﻿@page "/analytics"
+@using ChartJs.Blazor.PieChart
+@namespace BikeInventorySystem.Data
+
+@* Analytics main container *@
+<div class="container-fluid" style="margin-top: 100px;">
+        <div class="row">
+            <nav class="navbar navbar-dark bg-dark justify-content-between rounded-1">
+                <h1 class="navbar-brand mb-0 h1">Data Analytics</h1>
+            </nav>
+        </div>
+    <div class="row">
+        <div class=" col-12">
+            <div class="row justify-content-between">
+                @* BarGraph *@
+                <div class="col-6" >
+                    <BarGraph/>
+                </div>
+                @* Piechart *@
+                <div class="col-6">
+                    <PieChart/>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

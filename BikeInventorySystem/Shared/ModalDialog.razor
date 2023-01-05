@@ -1,0 +1,43 @@
+﻿
+
+<div class="modal fade show" style="display:block; margin-top:100px; background-color: rgba(10,10,10,.8);"
+    role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">@Title</h4>
+            </div>
+            <div class="modal-body">
+                @ChildContent
+            </div>
+            <div class="modal-footer">
+                <MudButton type="button" Class="mx-5" @onclick="@ModalCancel" Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Cancel" Color="Color.Error">Cancel</MudButton>
+                <MudButton type="button" @onclick=@ModalOk Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Done" Color="Color.Success">@OkLabel</MudButton>
+ 
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public string Title { get; set; }
+    [Parameter]
+	public RenderFragment ChildContent { get; set; }
+
+    [Parameter]
+    public string OkLabel { get; set; }
+
+    [Parameter]
+    public EventCallback<bool> OnClose { get; set; }
+
+    private Task ModalCancel()
+    {
+        return OnClose.InvokeAsync(true);
+    }
+
+    private Task ModalOk()
+    {
+        return OnClose.InvokeAsync(false);
+    }
+}
