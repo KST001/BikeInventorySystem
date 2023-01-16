@@ -1,5 +1,5 @@
 ﻿@inherits LayoutComponentBase
-@using BikeInventorySystem.Data
+@using BikeInventorySystem.Models
 
 
 <MudThemeProvider />
@@ -25,38 +25,43 @@
             <MudIconButton Icon="@Icons.Custom.Brands.GitHub" Color="Color.Inherit" Link="https://github.com/khemrajsinght" Target="_blank"></MudIconButton>
         </MudAppBar>
 
-        <MudDrawer @bind-Open="_drawerOpen" Elevation="1">
+    <MudDrawer @bind-Open="_drawerOpen" Elevation="1" Class="bg-dark">
 
-            <MudDrawerHeader Color="Color.Inherit">
-                <MudText Color="Color.Dark">Bike Inventory System</MudText>
+            <MudDrawerHeader>
+                <p Class="text-white h6">Bike Inventory System</p>
             </MudDrawerHeader>
 
-            <MudDivider DividerType="DividerType.Inset" />
-                <MudNavMenu>
-                        <MudNavLink Icon="@Icons.Material.Filled.Dashboard" IconColor="Color.Primary" Href="/dashboard" Match="NavLinkMatch.Prefix">Dashboard</MudNavLink>
-                        <MudNavLink Icon="@Icons.Material.Filled.Inventory" IconColor="Color.Primary" Href="/inventory" Match="NavLinkMatch.Prefix">Inventory</MudNavLink>
-                        <MudNavLink Icon="@Icons.Material.Filled.Inventory" IconColor="Color.Primary" Href="/Withdraw" Match="NavLinkMatch.Prefix">Withdraw</MudNavLink>
+            <MudDivider Class="text-white mb-3"/>
+                <MudNavMenu style="color: #C0C0C0;">
+                        @if (UserRole == Role.Admin)
+                        {
+                            <MudNavLink Icon="@Icons.Material.Filled.Dashboard" IconColor="Color.Default" Href="/dashboard" Match="NavLinkMatch.Prefix">Dashboard</MudNavLink>
+
+                        }
+                        <MudNavLink Icon="@Icons.Material.Filled.Inventory" IconColor="Color.Default" Href="/inventory" Match="NavLinkMatch.Prefix">Inventory</MudNavLink>
+                        <MudNavLink Icon="@Icons.Material.Filled.Inventory" IconColor="Color.Default" Href="/Withdraw" Match="NavLinkMatch.Prefix">Withdraw</MudNavLink>
 
                         @if (UserRole == Role.Admin)
                         {
-                            <MudNavLink Icon="@Icons.Material.Filled.Drafts" IconColor="Color.Primary" Href="/Approval" Match="NavLinkMatch.Prefix">Approval</MudNavLink>
+                            <MudNavLink Icon="@Icons.Material.Filled.Drafts" IconColor="Color.Default" Href="/Approval" Match="NavLinkMatch.Prefix">Approval</MudNavLink>
                             <MudNavLink Icon="@Icons.Material.Filled.Receipt" IconColor="Color.Default" Href="/ApprovedLog" Match="NavLinkMatch.Prefix">Approved Logs</MudNavLink>
+                            <MudNavLink Icon="@Icons.Material.Filled.BarChart" IconColor="Color.Default" Href="/analytics" Match="NavLinkMatch.Prefix">Analytics</MudNavLink>
                         }
 
-                        <MudNavLink Icon="@Icons.Material.Filled.BarChart" IconColor="Color.Info" Href="/analytics" Match="NavLinkMatch.Prefix">Analytics</MudNavLink>
-                        <MudNavGroup Icon="@Icons.Material.Filled.Settings" IconColor="Color.Dark" Title="Settings" Expanded="true">
+
+                        <MudNavGroup Icon="@Icons.Material.Filled.Settings" IconColor="Color.Default" Title="Settings" Expanded="true">
 
                             @if (UserRole == Role.Admin)
                             {
 
-                                <MudNavLink Icon="@Icons.Material.Filled.People" IconColor="Color.Primary" Href="/users" Match="NavLinkMatch.Prefix">Manage Users</MudNavLink>
+                                <MudNavLink Icon="@Icons.Material.Filled.People" IconColor="Color.Default" Href="/users" Match="NavLinkMatch.Prefix">Manage Users</MudNavLink>
 
                              }
                 
-                                <MudNavLink Icon="@Icons.Material.Filled.Password" IconColor="Color.Primary" Href="/change-password" Match="NavLinkMatch.Prefix">Change Password</MudNavLink>
+                                <MudNavLink Icon="@Icons.Material.Filled.Password" IconColor="Color.Default" Href="/change-password" Match="NavLinkMatch.Prefix">Change Password</MudNavLink>
                         </MudNavGroup>
 
-                        <MudNavLink Icon="@Icons.Material.Filled.Logout" IconColor="Color.Secondary" @onclick="LogoutHandler" Match="NavLinkMatch.Prefix">Logout</MudNavLink>
+                        <MudNavLink Icon="@Icons.Material.Filled.Logout" IconColor="Color.Default" @onclick="LogoutHandler" Match="NavLinkMatch.Prefix">Logout</MudNavLink>
                 </MudNavMenu>
         </MudDrawer>
 

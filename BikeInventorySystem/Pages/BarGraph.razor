@@ -1,6 +1,7 @@
 ﻿@page "/bargraph"
+@using BikeInventorySystem.Services;
 @using ChartJs.Blazor.BarChart
-@namespace BikeInventorySystem.Data
+@namespace BikeInventorySystem.Models
 
 <div class="container-fluid mt-5">
 
@@ -22,6 +23,7 @@
     protected override void OnInitialized()
     {
         _dataAnalysisDTO = DataAnalysisS.DataAnalysisDTO(_globalState.CurrentUser.Id);
+        
         _config = new BarConfig
             {
                 Options = new BarOptions

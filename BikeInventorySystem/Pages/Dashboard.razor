@@ -1,243 +1,249 @@
 ﻿@page "/dashboard"
 @inherits LayoutComponentBase
-@using BikeInventorySystem.Data;
+@using BikeInventorySystem.Models;
+@using BikeInventorySystem.Services;
 @inject NavigationManager NavManager
 
 
-<!-- Content Wrapper -->
-<div id="content-wrapper" class="d-flex flex-column" style="margin-top: 50px;">
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column" style="margin-top: 50px;">
 
-    <!-- Main Content -->
-    <div id="content">
-        
-        <!-- Begin Page Content -->
-        <div class="container-fluid">
+        <!-- Main Content -->
+        <div id="content">
 
-            <!-- Page Heading -->
-            <div class="d-sm-flex align-items-center justify-content-between mb-2">
-                <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
-            </div>
+            <!-- Begin Page Content -->
+            <div class="container-fluid">
 
-            <!-- Content Row -->
-            <div class="row">
+                <!-- Page Heading -->
+                <div class="d-sm-flex align-items-center justify-content-between mb-2">
+                    <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+                </div>
 
-                <!-- total Inventory item  (Monthly) Card Example -->
-                <div class="col-xl-4 col-md-6 mb-4">
-                    <div class="card border-left-primary shadow h-100 py-2">
-                        <div class="card-body">
-                            <div class="row no-gutters align-items-center">
-                                <div class="col mr-2">
-                                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                        Total Inventory Item
+                <!-- Content Row -->
+                <div class="row">
+
+                    <!-- total Inventory item  (Monthly) Card Example -->
+                    <div class="col-xl-4 col-md-6 mb-4">
+                        <div class="card border-left-primary shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1 h6">
+                                            Total Inventory Item
+                                        </div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">@itemCount</div>
                                     </div>
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800">@itemCount</div>
-                                </div>
-                                <div class="col-auto">
-                                    <i class="fas fa-calendar fa-2x text-gray-300"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Users Card Example -->
-                <div class="col-xl-4 col-md-6 mb-4">
-                    <div class="card border-left-success shadow h-100 py-2">
-                        <div class="card-body">
-                            <div class="row no-gutters align-items-center">
-                                <div class="col mr-2">
-                                    <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                        Total Users
+                                    <div class="col-auto">
+                                        <i class="fas fa-calendar fa-2x text-gray-300"></i>
                                     </div>
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800">@userCount</div>
-                                </div>
-                                <div class="col-auto">
-                                    <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
-         
-
-                <!-- Pending Requests Card Example -->
-                <div class="col-xl-4 col-md-6 mb-4">
-                    <div class="card border-left-warning shadow h-100 py-2">
-                        <div class="card-body">
-                            <div class="row no-gutters align-items-center">
-                                <div class="col mr-2">
-                                    <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                        Approval Pending
+                    <!-- Users Card Example -->
+                    <div class="col-xl-4 col-md-6 mb-4">
+                        <div class="card border-left-success shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1 h6">
+                                            Total Users
+                                        </div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">@userCount</div>
                                     </div>
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800">@pendingCount</div>
+                                    <div class="col-auto">
+                                        <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                                    </div>
                                 </div>
-                                <div class="col-auto">
-                                    <i class="fas fa-comments fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <!-- Pending Requests Card Example -->
+                    <div class="col-xl-4 col-md-6 mb-4">
+                        <div class="card border-left-warning shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1 h6">
+                                            Approval Pending
+                                        </div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">@pendingCount</div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <i class="fas fa-comments fa-2x text-gray-300"></i>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- Content Row -->
-            <div class="row">
+                <!-- Content Row -->
+                <div class="row">
 
-                <!-- Area Chart -->
-                <div class="col-xl-8 col-lg-7">
-                    <div class="card shadow mb-4">
-                        <!-- Card Body -->
-                        <div class="card-body">
-                            <div class="chart-area">
-                                <BarGraph />
+                    <!-- Area Chart -->
+                    <div class="col-xl-6 col-lg-6">
+                        <div class="card shadow mb-4">
+                            <!-- Card Body -->
+                            <div class="card-body">
+                                <div class="chart-area">
+                                    <BarGraph />
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- Pie Chart -->
+                    <div class="col-xl-6 col-lg-6">
+                        <div class="card shadow mb-4">
+                            <!-- Card Body -->
+                            <div class="card-body">
+                                <div class="chart-area">
+                                    <PieChart />
+                                </div>
                             </div>
                         </div>
-                      
                     </div>
                 </div>
 
-                <!-- Pie Chart -->
-                <div class="col-xl-4 col-lg-5">
-                    <div class="card shadow mb-4">
-                        <!-- Card Body -->
-                        <div class="card-body">
-                            <div class="chart-area">
-                                <PieChart />
+
+                <!-- Content Row -->
+                <div class="row">
+
+                    <!-- Content Column -->
+                    <div class="col-lg-6 mb-4">
+
+                        <!-- Approved History Card Example -->
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                                <h4 class="m-0 font-weight-bold text-primary">Approved History</h4>
+                            </div>
+                            <div class="card-body" style="height:300px;">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Item name</th>
+                                            <th>Quantity</th>
+                                            <th>Taken By</th>
+                                            <th>Approved By</th>
+                                            <th>
+                                                Approved Date
+                                                <a class='btn text-@(_sortBy == "approvedDate" ? "primary" : "secondary")' data-mdb-toggle="tooltip"
+                                               @onclick='()=>SortByHandler("approvedDate")'>
+                                                    <span class='oi oi-sort-@(_sortBy == "approvedDate" ? _sortDirection : "ascending")' />
+                                                </a>
+                                            </th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @{
+                                            IEnumerable<ApprovedItem> approvedList = _approvedItems;
+                                            if (_sortBy == "approvedDate")
+                                            {
+                                                approvedList = _sortDirection == "ascending" ? approvedList.OrderBy(t => t.ApprovedDate) : approvedList.OrderByDescending(t =>
+                                                t.ApprovedDate);
+                                            }
+
+                                        }
+                                        @foreach (var approvedItem in approvedList)
+                                        {
+                                            <tr>
+                                                <td>@approvedItem.ItemName</td>
+                                                <td>@approvedItem.Quantity.ToString()</td>
+                                                <td>@approvedItem.TakerName</td>
+                                                <td>@approvedItem.ApproverName</td>
+                                                <td>@approvedItem.ApprovedDate.ToString("MMM dd, yyyy h:mm tt")</td>
+                                            </tr>
+                                        }
+                                    </tbody>
+
+                                </table>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+
+
+                    <!-- Content Column -->
+                    <div class="col-lg-6 mb-4">
+
+                        <!-- Approval Pending-->
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                                <h4 class="m-0 font-weight-bold text-primary">Approval Pending</h4>
+                            </div>
+
+                            <div class="card-body" style="height:300px;">
+
+
+
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr class="bg-dark text-white">
+                                            <th>Item Name</th>
+                                            <th>Quantity</th>
+                                            <th>Taken By</th>
+                                            <th>DateTakenOut</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        @foreach (var withdrawlItem in _withdrawlItems)
+                                        {
+                                            <tr>
+                                                <td>@withdrawlItem.ItemName</td>
+                                                <td>@withdrawlItem.Quantity.ToString()</td>
+                                                <td>@withdrawlItem.TakerName</td>
+                                                <td>
+                                                    <p class="small mb-0">
+                                                        @withdrawlItem.CreatedAt.ToString("MMM dd, yyyy h:mm tt")
+                                                    </p>
+                                                </td>
+                                                <td>
+                                                    <MudButton type="button" @onclick="()=>OpenApproveItemDialog(withdrawlItem)" StartIcon="@Icons.Material.Filled.Check" Color="Color.Success"></MudButton>
+                                                    <MudButton type="button" @onclick="()=>OpenRejectItemDialog(withdrawlItem)" StartIcon="@Icons.Material.Filled.Delete" Color="Color.Error"></MudButton>
+                                                </td>
+
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+
                             </div>
                         </div>
-                        
-    
-                       
-                    </div>
-                </div>
-             </div>
-           
-
-            <!-- Content Row -->
-            <div class="row">
-
-                <!-- Content Column -->
-                <div class="col-lg-6 mb-4">
-
-                    <!-- Approved History Card Example -->
-                    <div class="card shadow mb-4">
-                        <div class="card-header py-3">
-                            <h4 class="m-0 font-weight-bold text-primary">Approved History</h4>
-                        </div>
-                        <div class="card-body" style="height:300px;">
-                            <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Item name</th>
-                            <th>Quantity</th>
-                            <th>Taken By</th>
-                            <th>Approved By</th>
-                            <th>
-                                Approved Date
-                                <a class='btn text-@(_sortBy == "approvedDate" ? "primary" : "secondary")' data-mdb-toggle="tooltip"
-                                   @onclick='()=>SortByHandler("approvedDate")'>
-                                    <span class='oi oi-sort-@(_sortBy == "approvedDate" ? _sortDirection : "ascending")' />
-                                </a>
-                            </th>
-
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @{
-                            IEnumerable<ApprovedItem> approvedList = _approvedItems;
-                            if (_sortBy == "approvedDate")
-                            {
-                                approvedList = _sortDirection == "ascending" ? approvedList.OrderBy(t => t.ApprovedDate) : approvedList.OrderByDescending(t =>
-                                t.ApprovedDate);
-                            }
-
-                        }
-                        @foreach (var approvedItem in approvedList)
-                        {
-                            <tr>
-                                <td>@approvedItem.ItemName</td>
-                                <td>@approvedItem.Quantity.ToString()</td>
-                                <td>@approvedItem.TakerName</td>
-                                <td>@approvedItem.ApproverName</td>
-                                <td>@approvedItem.ApprovedDate.ToString("MMM dd, yyyy h:mm tt")</td>
-                            </tr>
-                        }
-                    </tbody>
-            
-                </table>
-
-                        </div>
 
                     </div>
-                </div>
-                <!-- Content Column -->
-                <div class="col-lg-6 mb-4">
 
-                    <!-- Approval Pending-->
-                    <div class="card shadow mb-4">
-                        <div class="card-header py-3">
-                            <h4 class="m-0 font-weight-bold text-primary">Approval Pending</h4>
-                        </div>
 
-                        <div class="card-body" style="height:300px;">
-                           
-                            
-                    <table class="table table-hover">
-                        <thead>
-                            <tr class="bg-dark text-white">
-                                <th>Item Name</th>
-                                <th>Quantity</th>
-                                <th>Taken By</th>
-                                <th>DateTakenOut</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-
-                        <tbody>
-                            @foreach (var withdrawlItem in _withdrawlItems)
-                            {
-                                <tr>
-                                    <td>@withdrawlItem.ItemName</td>
-                                    <td>@withdrawlItem.Quantity.ToString()</td>
-                                    <td>@withdrawlItem.TakerName</td>
-                                    <td>
-                                        <p class="small mb-0">
-                                            @withdrawlItem.CreatedAt.ToString("MMM dd, yyyy h:mm tt")
-                                        </p>
-                                    </td>
-                                    <td>
-                                        <MudButton type="button" @onclick="()=>OpenApproveItemDialog(withdrawlItem)" StartIcon="@Icons.Material.Filled.Check" Color="Color.Success"></MudButton>
-                                        <MudButton type="button" @onclick="()=>OpenRejectItemDialog(withdrawlItem)" StartIcon="@Icons.Material.Filled.Delete" Color="Color.Error"></MudButton>
-                                    </td>
-
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
-                        </div>
-                    </div>
 
                 </div>
+                <!-- end container-fluid -->
+
             </div>
+            <!-- End of Main Content -->
+            <!-- Footer -->
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Copyright &copy; Khemraj Singh Thakuri</span>
+                    </div>
+                </div>
+            </footer>
+            <!-- End of Footer -->
 
         </div>
-        <!-- end container-fluid -->
-
     </div>
-    <!-- End of Main Content -->
-    <!-- Footer -->
-    <footer class="sticky-footer bg-white">
-        <div class="container my-auto">
-            <div class="copyright text-center my-auto">
-                <span>Copyright &copy; Khemraj Singh Thakuri</span>
-            </div>
-        </div>
-    </footer>
-    <!-- End of Footer -->
+    <!-- End of Content Wrapper -->
 
-</div>
-<!-- End of Content Wrapper -->
 @code {
     [CascadingParameter]
     private GlobalState _globalState { get; set; }
@@ -245,6 +251,8 @@
     private int userCount { get; set; }
     private int itemCount { get; set; }
     private int pendingCount { get; set; }
+    [Parameter]
+    public string Username { get; set; }
     [Parameter]
     public Role UserRole { get; set; }
     private string _sortBy = "approvedDate";

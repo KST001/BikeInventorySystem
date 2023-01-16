@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Components.WebView.Maui;
-using BikeInventorySystem.Data;
+using BikeInventorySystem.Models;
+using BikeInventorySystem.Services;
 using MudBlazor.Services;
+
 namespace BikeInventorySystem;
 
 public static class MauiProgram
